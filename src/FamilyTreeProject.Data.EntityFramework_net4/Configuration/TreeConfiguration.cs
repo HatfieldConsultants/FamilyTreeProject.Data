@@ -7,7 +7,6 @@
 // *****************************************
 
 using System.ComponentModel.DataAnnotations.Schema;
-using FamilyTreeProject.Core;
 
 namespace FamilyTreeProject.Data.EntityFramework.Configuration
 {

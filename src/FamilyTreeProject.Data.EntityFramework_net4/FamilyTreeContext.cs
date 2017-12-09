@@ -7,6 +7,7 @@
 // *****************************************
 
 using System.Data.Entity;
+using FamilyTreeProject.Data.Entities;
 
 namespace FamilyTreeProject.Data.EntityFramework
 {
@@ -16,23 +17,23 @@ namespace FamilyTreeProject.Data.EntityFramework
 
         public FamilyTreeContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
 
-        public DbSet<Tree> Trees { get; set; }
+        public DbSet<TreeEntity> Trees { get; set; }
 
-        public DbSet<Individual> Individuals { get; set; }
+        public DbSet<IndividualEntity> Individuals { get; set; }
 
-        public DbSet<Family> Familys { get; set; }
+        public DbSet<FamilyEntity> Familys { get; set; }
 
-        public DbSet<Citation> Citations { get; set; }
+        public DbSet<CitationEntity> Citations { get; set; }
 
-        public DbSet<Fact> Facts { get; set; }
+        public DbSet<FactEntity> Facts { get; set; }
 
-        public DbSet<MultimediaLink> MultimediaLinks { get; set; }
+        public DbSet<MultimediaLinkEntity> MultimediaLinks { get; set; }
 
-        public DbSet<Note> Note { get; set; }
+        public DbSet<NoteEntity> Note { get; set; }
 
-        public DbSet<Source> Sources { get; set; }
+        public DbSet<SourceEntity> Sources { get; set; }
 
-        public DbSet<Repository> Repositorys { get; set; }
+        public DbSet<RepositoryEntity> Repositorys { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

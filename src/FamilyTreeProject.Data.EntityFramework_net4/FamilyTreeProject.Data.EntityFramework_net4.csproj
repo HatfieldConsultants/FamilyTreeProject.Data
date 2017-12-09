@@ -38,9 +38,6 @@
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FamilyTreeProject.Core">
-      <HintPath>..\..\..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\bin\Release\netstandard1.4\FamilyTreeProject.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -61,14 +58,18 @@
     <Compile Include="Configuration\RepositoryConfiguration.cs" />
     <Compile Include="Configuration\SourceConfiguration.cs" />
     <Compile Include="Configuration\TreeConfiguration.cs" />
-    <Compile Include="EFRepository.cs" />
-    <Compile Include="EFUnitOfWork.cs" />
     <Compile Include="FamilyTreeContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FamilyTreeProject.Data.Entities\FamilyTreeProject.Data.Entities.csproj">
+      <Project>{a900aa63-173f-4c41-a391-7569c6c62357}</Project>
+      <Name>FamilyTreeProject.Data.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
