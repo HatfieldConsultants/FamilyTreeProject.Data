@@ -8,7 +8,7 @@
 
 // ReSharper disable ConvertPropertyToExpressionBody
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities.Common
+namespace FamilyTreeProject.Data.EntityFramework.Common
 {
     /// <summary>
     /// The BaseEntity class provides a base class for Family Tree Entities

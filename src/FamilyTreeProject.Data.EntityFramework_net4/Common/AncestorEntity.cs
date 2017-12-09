@@ -9,7 +9,7 @@
 using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities.Common
+namespace FamilyTreeProject.Data.EntityFramework.Common
 {
     public abstract class AncestorEntity : Entity
     {

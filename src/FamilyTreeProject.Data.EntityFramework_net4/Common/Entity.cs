@@ -9,7 +9,7 @@
 using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities.Common
+namespace FamilyTreeProject.Data.EntityFramework.Common
 {
     /// <summary>
     /// Entities are the main objects in the Family Tree (represented by Records in GEDCOM),

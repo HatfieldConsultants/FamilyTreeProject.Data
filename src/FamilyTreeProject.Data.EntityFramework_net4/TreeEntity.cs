@@ -9,7 +9,7 @@
 using System;
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities
+namespace FamilyTreeProject.Data.EntityFramework
 {
     /// <summary>
     /// Represents a Family Tree

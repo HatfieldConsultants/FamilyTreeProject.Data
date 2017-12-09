@@ -6,11 +6,11 @@
 //                                         *
 // *****************************************
 
-using FamilyTreeProject.Data.Entities.Common;
+using FamilyTreeProject.Data.EntityFramework.Common;
 
 // ReSharper disable ConvertPropertyToExpressionBody
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities
+namespace FamilyTreeProject.Data.EntityFramework
 {
     /// <summary>
     /// Family is a class that represents a family of ancestors

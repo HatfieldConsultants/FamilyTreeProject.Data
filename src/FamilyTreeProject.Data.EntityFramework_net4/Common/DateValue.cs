@@ -10,7 +10,7 @@ using System;
 using System.Text;
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities.Common
+namespace FamilyTreeProject.Data.EntityFramework.Common
 {
     public class DateValue
     {

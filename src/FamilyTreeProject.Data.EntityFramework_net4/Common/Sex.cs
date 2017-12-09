@@ -7,7 +7,7 @@
 // *****************************************
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities.Common
+namespace FamilyTreeProject.Data.EntityFramework.Common
 {
     /// <summary>
     ///   An Enum representing the Sex of an Individual

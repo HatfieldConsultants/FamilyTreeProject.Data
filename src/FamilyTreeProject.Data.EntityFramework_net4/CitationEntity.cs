@@ -6,10 +6,10 @@
 //                                         *
 // *****************************************
 
-using FamilyTreeProject.Data.Entities.Common;
+using FamilyTreeProject.Data.EntityFramework.Common;
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities
+namespace FamilyTreeProject.Data.EntityFramework
 {
     /// <summary>
     /// Citation is a class that represents a source citation

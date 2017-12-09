@@ -2,12 +2,16 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <!-- Package version for NuGet -->
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D2A01783-90D0-424F-9FC7-8A85230B49E7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FamilyTreeProject.Data.EntityFramework_net4</RootNamespace>
+    <RootNamespace>FamilyTreeProject.Data.EntityFramework</RootNamespace>
     <AssemblyName>FamilyTreeProject.Data.EntityFramework_net4</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -49,6 +53,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CitationEntity.cs" />
+    <Compile Include="Common\AncestorEntity.cs" />
+    <Compile Include="Common\BaseEntity.cs" />
+    <Compile Include="Common\DateStructure.cs" />
+    <Compile Include="Common\DateType.cs" />
+    <Compile Include="Common\DateValue.cs" />
+    <Compile Include="Common\Entity.cs" />
+    <Compile Include="Common\EntityType.cs" />
+    <Compile Include="Common\FactType.cs" />
+    <Compile Include="Common\OwnedEntity.cs" />
+    <Compile Include="Common\Sex.cs" />
     <Compile Include="Configuration\CitationConfiguration.cs" />
     <Compile Include="Configuration\FactConfiguration.cs" />
     <Compile Include="Configuration\FamilyConfiguration.cs" />
@@ -58,18 +73,20 @@
     <Compile Include="Configuration\RepositoryConfiguration.cs" />
     <Compile Include="Configuration\SourceConfiguration.cs" />
     <Compile Include="Configuration\TreeConfiguration.cs" />
+    <Compile Include="FactEntity.cs" />
+    <Compile Include="FamilyEntity.cs" />
     <Compile Include="FamilyTreeContext.cs" />
+    <Compile Include="IndividualEntity.cs" />
+    <Compile Include="MultimediaLinkEntity.cs" />
+    <Compile Include="NoteEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryEntity.cs" />
+    <Compile Include="SourceEntity.cs" />
+    <Compile Include="TreeEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FamilyTreeProject.Data.Entities\FamilyTreeProject.Data.Entities.csproj">
-      <Project>{a900aa63-173f-4c41-a391-7569c6c62357}</Project>
-      <Name>FamilyTreeProject.Data.Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

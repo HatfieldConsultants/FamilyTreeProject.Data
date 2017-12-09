@@ -6,10 +6,10 @@
 //                                         *
 // *****************************************
 
-using FamilyTreeProject.Data.Entities.Common;
+using FamilyTreeProject.Data.EntityFramework.Common;
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities
+namespace FamilyTreeProject.Data.EntityFramework
 {
     /// <summary>
     /// The Repository class represents a repository of Family Tree information (this could be a website or a library for example)

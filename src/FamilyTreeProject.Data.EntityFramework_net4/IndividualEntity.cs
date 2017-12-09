@@ -8,12 +8,12 @@
 
 using System;
 using System.Collections.Generic;
-using FamilyTreeProject.Data.Entities.Common;
+using FamilyTreeProject.Data.EntityFramework.Common;
 
 // ReSharper disable ConvertPropertyToExpressionBody
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities
+namespace FamilyTreeProject.Data.EntityFramework
 {
     /// <summary>
     ///   Represents an individual in a family tree

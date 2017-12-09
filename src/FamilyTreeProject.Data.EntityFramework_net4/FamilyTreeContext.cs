@@ -7,7 +7,7 @@
 // *****************************************
 
 using System.Data.Entity;
-using FamilyTreeProject.Data.Entities;
+using FamilyTreeProject.Data.EntityFramework.Common;
 
 namespace FamilyTreeProject.Data.EntityFramework
 {

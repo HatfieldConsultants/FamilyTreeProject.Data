@@ -7,10 +7,10 @@
 // *****************************************
 
 using System.Collections.Generic;
-using FamilyTreeProject.Data.Entities.Common;
+using FamilyTreeProject.Data.EntityFramework.Common;
 
 // ReSharper disable once CheckNamespace
-namespace FamilyTreeProject.Data.Entities
+namespace FamilyTreeProject.Data.EntityFramework
 {
     /// <summary>
     /// Fact is a class that represents a generic Fact (or attribute in GEDCOM)
