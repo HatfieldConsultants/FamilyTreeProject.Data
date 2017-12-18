@@ -55,11 +55,13 @@ namespace FamilyTreeProject.Data.GEDCOM
             {
                 //New father
                 newFamily.HusbandId = individual.FatherId;
+                newFamily.HusbandXRefId = individual.XRefId;
             }
             if (!string.IsNullOrEmpty(individual.MotherId))
             {
                 //New mother
                 newFamily.WifeId = individual.MotherId;
+                newFamily.WifeXRefId = individual.MotherXRefId;
             }
 
             newFamily.Children.Add(individual);
@@ -112,18 +114,20 @@ namespace FamilyTreeProject.Data.GEDCOM
                 if (citationStructure == null) continue;
 
                 var newCitation = new Citation()
-                                        {
-                                            Date = citationStructure.Date,
-                                            Page = citationStructure.Page,
-                                            Text = citationStructure.Text,
-                                            SourceId = GEDCOMUtil.GetId(citationStructure.XRefId),
-                                            OwnerId = entity.Id,
-                                            OwnerType = (entity is Individual) 
+                {
+                    Date = citationStructure.Date,
+                    Page = citationStructure.Page,
+                    Text = citationStructure.Text,
+                    SourceId = GEDCOMUtil.GetId(citationStructure.XRefId),
+                    SourceXRefId = citationStructure.XRefId,
+                    OwnerId = entity.Id,
+                    OwnerXRefId = entity.XRefId,
+                    OwnerType = (entity is Individual)
                                                         ? EntityType.Individual
-                                                        :(entity is Fact) 
+                                                        : (entity is Fact)
                                                             ? EntityType.Fact
                                                             : EntityType.Family
-                                        };
+                };
 
                 var factEntity = entity as Fact;
                 if (factEntity != null)
@@ -150,12 +154,13 @@ namespace FamilyTreeProject.Data.GEDCOM
             foreach (var eventStructure in events)
             {
                 var newFact = new Fact()
-                                    {
-                                        Date = eventStructure.Date,
-                                        Place = (eventStructure.Place != null) ? eventStructure.Place.Data : string.Empty,
-                                        OwnerId = entity.Id,
-                                        OwnerType = (entity is Individual) ? EntityType.Individual : EntityType.Family
-                                    };
+                {
+                    Date = eventStructure.Date,
+                    Place = (eventStructure.Place != null) ? eventStructure.Place.Data : string.Empty,
+                    OwnerId = entity.Id,
+                    OwnerXRefId = entity.XRefId,
+                    OwnerType = (entity is Individual) ? EntityType.Individual : EntityType.Family
+                };
 
                 switch (eventStructure.EventClass)
                 {
@@ -188,14 +193,17 @@ namespace FamilyTreeProject.Data.GEDCOM
 
             foreach (var gedcomRecord in _document.FamilyRecords)
             {
-                var familyRecord = (GEDCOMFamilyRecord) gedcomRecord;
+                var familyRecord = (GEDCOMFamilyRecord)gedcomRecord;
                 var family = new Family
-                                    {
-                                        Id = familyRecord.GetId(),
-                                        HusbandId = GEDCOMUtil.GetId(familyRecord.Husband),
-                                        WifeId = GEDCOMUtil.GetId(familyRecord.Wife),
-                                        TreeId = DEFAULT_TREE_ID
-                                    };
+                {
+                    Id = familyRecord.GetId(),
+                    XRefId = (!string.IsNullOrEmpty(familyRecord.XRefId) ? familyRecord.XRefId : familyRecord.Id),
+                    HusbandId = GEDCOMUtil.GetId(familyRecord.Husband),
+                    HusbandXRefId = familyRecord.Husband,
+                    WifeId = GEDCOMUtil.GetId(familyRecord.Wife),
+                    WifeXRefId = familyRecord.Wife,
+                    TreeId = DEFAULT_TREE_ID
+                };
 
                 ProcessFacts(family, familyRecord.Events);
 
@@ -205,19 +213,25 @@ namespace FamilyTreeProject.Data.GEDCOM
 
                 ProcessCitations(family, familyRecord.SourceCitations);
 
-                foreach (string child in familyRecord.Children)
+                if (null != familyRecord.Children)
                 {
-                    var childId = GEDCOMUtil.GetId(child);
-                    if (!string.IsNullOrEmpty(childId))
+                    foreach (string child in familyRecord.Children)
                     {
-                        var individual = Individuals.SingleOrDefault(ind => ind.Id == childId);
-                        if (individual != null)
+                        var childId = GEDCOMUtil.GetId(child);
+                        if (!string.IsNullOrEmpty(childId))
                         {
-                            individual.MotherId = family.WifeId;
-                            individual.FatherId = family.HusbandId;
+                            var individual = Individuals.SingleOrDefault(ind => ind.Id == childId);
+                            if (individual != null)
+                            {
+                                individual.MotherId = family.WifeId;
+                                individual.MotherXRefId = family.WifeXRefId;
+                                individual.FatherId = family.HusbandId;
+                                individual.FatherXRefId = family.HusbandXRefId;
+                            }
                         }
                     }
                 }
+
                 Families.Add(family);
             }
         }
@@ -228,15 +242,16 @@ namespace FamilyTreeProject.Data.GEDCOM
 
             foreach (var gedcomRecord in _document.IndividualRecords)
             {
-                var individualRecord = (GEDCOMIndividualRecord) gedcomRecord;
+                var individualRecord = (GEDCOMIndividualRecord)gedcomRecord;
                 var individual = new Individual
-                                        {
-                                            Id = individualRecord.GetId(),
-                                            FirstName = (individualRecord.Name != null) ? individualRecord.Name.GivenName : String.Empty,
-                                            LastName = (individualRecord.Name != null) ? individualRecord.Name.LastName : String.Empty,
-                                            Sex = individualRecord.Sex,
-                                            TreeId = DEFAULT_TREE_ID
-                                        };
+                {
+                    Id = individualRecord.GetId(),
+                    XRefId = individualRecord.Id,
+                    FirstName = (individualRecord.Name != null) ? individualRecord.Name.GivenName : String.Empty,
+                    LastName = (individualRecord.Name != null) ? individualRecord.Name.LastName : String.Empty,
+                    Sex = individualRecord.Sex,
+                    TreeId = DEFAULT_TREE_ID
+                };
 
                 ProcessFacts(individual, individualRecord.Events);
 
@@ -255,19 +270,19 @@ namespace FamilyTreeProject.Data.GEDCOM
             foreach (var multimediaStructure in multimedia)
             {
                 var multimediaLink = new MultimediaLink()
-                                            {
-                                                File = multimediaStructure.FileReference,
-                                                Format = multimediaStructure.Format,
-                                                Title = multimediaStructure.Title,
-                                                OwnerId = entity.Id,
-                                                OwnerType = (entity is Individual)
+                {
+                    File = multimediaStructure.FileReference,
+                    Format = multimediaStructure.Format,
+                    Title = multimediaStructure.Title,
+                    OwnerId = entity.Id,
+                    OwnerType = (entity is Individual)
                                                     ? EntityType.Individual
                                                     : (entity is Fact)
                                                         ? EntityType.Fact
                                                         : (entity is Family)
                                                             ? EntityType.Family
                                                             : EntityType.Citation
-                                            };
+                };
 
 
                 entity.Multimedia.Add(multimediaLink);
@@ -335,12 +350,13 @@ namespace FamilyTreeProject.Data.GEDCOM
             {
                 var repositoryRecord = (GEDCOMRepositoryRecord)gedcomRecord;
                 var repository = new Repository
-                                        {
-                                            Id = repositoryRecord.GetId(),
-                                            Address = repositoryRecord.Address.Address,
-                                            Name = repositoryRecord.Name,
-                                            TreeId = DEFAULT_TREE_ID
-                                        };
+                {
+                    Id = repositoryRecord.GetId(),
+                    XRefId = (!string.IsNullOrEmpty(repositoryRecord.XRefId) ? repositoryRecord.XRefId : repositoryRecord.Id),
+                    Address = repositoryRecord.Address.Address,
+                    Name = repositoryRecord.Name,
+                    TreeId = DEFAULT_TREE_ID
+                };
 
                 ProcessNotes(repository, repositoryRecord.Notes);
 
@@ -356,16 +372,18 @@ namespace FamilyTreeProject.Data.GEDCOM
             {
                 var sourceRecord = (GEDCOMSourceRecord)gedcomRecord;
                 var source = new Source
-                                    {
-                                        Id = sourceRecord.GetId(),
-                                        Author = sourceRecord.Author,
-                                        Title = sourceRecord.Title,
-                                        Publisher = sourceRecord.PublisherInfo,
-                                        TreeId = DEFAULT_TREE_ID
-                                    };
+                {
+                    Id = sourceRecord.GetId(),
+                    XRefId = sourceRecord.XRefId,
+                    Author = sourceRecord.Author,
+                    Title = sourceRecord.Title,
+                    Publisher = sourceRecord.PublisherInfo,
+                    TreeId = DEFAULT_TREE_ID
+                };
                 if (sourceRecord.SourceRepository != null)
                 {
                     source.RepositoryId = GEDCOMUtil.GetId(sourceRecord.SourceRepository.XRefId);
+                    source.RepositoryXRefId = sourceRecord.SourceRepository.XRefId;
                 }
 
                 ProcessNotes(source, sourceRecord.Notes);
