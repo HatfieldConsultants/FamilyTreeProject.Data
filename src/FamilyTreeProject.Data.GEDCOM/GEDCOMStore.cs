@@ -191,6 +191,12 @@ namespace FamilyTreeProject.Data.GEDCOM
         {
             Families = new List<Family>();
 
+            var indiDict = new Dictionary<string, Individual>(capacity: this.Individuals.Count);
+            foreach (Individual indi in this.Individuals)
+            {
+                indiDict[indi.Id] = indi;
+            }
+
             foreach (var gedcomRecord in _document.FamilyRecords)
             {
                 var familyRecord = (GEDCOMFamilyRecord)gedcomRecord;
@@ -220,9 +226,9 @@ namespace FamilyTreeProject.Data.GEDCOM
                         var childId = GEDCOMUtil.GetId(child);
                         if (!string.IsNullOrEmpty(childId))
                         {
-                            var individual = Individuals.SingleOrDefault(ind => ind.Id == childId);
-                            if (individual != null)
+                            if (indiDict.ContainsKey(childId))
                             {
+                                var individual = indiDict[childId];
                                 individual.MotherId = family.WifeId;
                                 individual.MotherXRefId = family.WifeXRefId;
                                 individual.FatherId = family.HusbandId;
